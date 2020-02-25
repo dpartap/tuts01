@@ -3,16 +3,16 @@ services:
     - docker
 
 before_install:
-    - docker build -t dpartap/react-fib -f ./client/Dockerfile.dev ./client
+    - docker build -t inimeg/dpartap/react-fib -f ./client/Dockerfile.dev ./client
 
 script:
-    - docker run -e CI=true dpartap/react-fib npm run test
+    - docker run -e CI=true inimeg/dpartap/react-fib npm run test
 
 after_success:
-    - docker build -t dpartap/tuts01-client ./client
-    - docker build -t dpartap/tuts01-nginx ./nginx
-    - docker build -t dpartap/tuts01-server ./server
-    - docker build -t dpartap/tuts01-worker ./worker
+    - docker build -t inimeg/dpartap/tuts01-client ./client
+    - docker build -t inimeg/dpartap/tuts01-nginx ./nginx
+    - docker build -t inimeg/dpartap/tuts01-server ./server
+    - docker build -t inimeg/dpartap/tuts01-worker ./worker
 
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
