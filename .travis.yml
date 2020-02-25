@@ -1,0 +1,23 @@
+sudo: required
+services:
+    - docker
+
+before_install:
+    - docker build -t dpartap/react-fib -f ./client/Dockerfile.dev ./client
+
+script:
+    - docker run -e CI=true dpartap/react-fib npm run test
+
+after_success:
+    - docker build -t dpartap/tuts01-client ./client
+    - docker build -t dpartap/tuts01-worker ./worker
+    - docker build -t dpartap/tuts01-nginx ./nginx
+    - docker build -t dpartap/tuts01-server ./server
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+    - docker push dpartap/tuts01-client 
+    - docker push dpartap/tuts01-nginx 
+    - docker push dpartap/tuts01-server 
+    - docker push dpartap/tuts01-worker 
+
+    
