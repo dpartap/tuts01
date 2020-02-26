@@ -21,4 +21,16 @@ after_success:
     - docker push inimeg/tuts01-server 
     - docker push inimeg/tuts01-worker 
 
+deploy:
+    provider: elasticbeanstalk
+    region: "us-east-2"
+    app: "tuts01"
+    env: "Tuts01-env"
+    bucket_name: "elasticbeanstalk-us-east-2-334266025345"
+    bucket_path: "tuts01"
+    on:
+        branch: master
+    access_key_id: $AWS_ACCESS_ID
+    secret_access_key: $AWS_SECRET_KEY
+
     
